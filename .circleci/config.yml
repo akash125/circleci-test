@@ -1,5 +1,14 @@
 version: 2
 jobs:
+  validate:
+    docker:
+      - image: hashicorp/packer:1.1.1
+    working_directory: ~/packer
+    steps:
+      - checkout
+      - run:
+          name: Validate base
+          command: packer validate ./packer-scripts/test.packer
   build-base:
     docker:
       - image: hashicorp/packer:1.1.1
@@ -14,6 +23,9 @@ jobs:
           no_output_timeout: 30m
 workflows:
   version: 2
-  build-and-deploy:
+  validate-and-build:
     jobs:
-      - build-base
+      - validate
+      - build-base:
+          requires:
+            - validate
