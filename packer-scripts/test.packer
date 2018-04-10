@@ -3,7 +3,7 @@
       "ami_id": "ami-38708b45",
       "region": "us-east-1",
       "env"   : "production",
-      "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+      "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
       "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
   },
   "builders" : [
