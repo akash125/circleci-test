@@ -1,0 +1,31 @@
+{
+  "variables" : {
+      "ami_id": "ami-38708b45",
+      "region": "us-east-1",
+      "env"   : "production"
+  },
+  "builders" : [
+                  {
+                   "type": "amazon-ebs",                    
+                   "region": "{{user `region`}}",
+                   "source_ami": "{{user `ami_id`}}",
+                   "instance_type": "t2.micro",
+                   "ssh_username" : "ubuntu",
+                   "ami_description": "base orion AMI",
+                   "ami_name" : "test-{{isotime | clean_ami_name}}",
+                   "tags" : {
+                              "Name": "TestAMI",
+                              "Env": "{{user `env`}}"
+                             }      
+                    }
+              ],
+  "provisioners" : [
+                    {
+        "type": "shell",
+        "inline": [
+            "sudo apt-get update -y",
+            "sudo apt-get install -y nginx"
+             ]
+                  }
+       ]  
+}
